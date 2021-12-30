@@ -7,7 +7,21 @@ import { AlquilerService } from '../../services/alquiler.service';
   styleUrls: ['./table-alquiler.component.css'],
 })
 export class TableAlquilerComponent implements OnInit {
-  constructor(alquilerService: AlquilerService) {}
+  headerTable: string[] = [];
 
-  ngOnInit(): void {}
+  constructor(private alquilerService: AlquilerService) {}
+
+  ngOnInit(): void {
+    this.getHeaderTable();
+  }
+
+  getHeaderTable() {
+    for (
+      let index = 0;
+      index < this.alquilerService.getHeaderTable().length;
+      index++
+    ) {
+      this.headerTable[index] = this.alquilerService.getHeaderTable()[index];
+    }
+  }
 }

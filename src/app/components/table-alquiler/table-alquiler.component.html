@@ -1,1 +1,16 @@
-<p>table-alquiler works!</p>
+<div class="border shadow-lg h-100">
+  <div class="m-5">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr class="table-primary text-center align-middle">
+            <th *ngFor="let titulo of headerTable" scope="col">
+              {{ titulo }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="text-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,68 @@
-<p>form-alquiler works!</p>
-<ul *ngFor="let item of maquinarias">
-  <li>{{ item.codigo }}</li>
-</ul>
+<div class="border shadow-lg">
+  <div class="m-5">
+    <form [formGroup]="formAlquiler" (submit)="registrarAlquiler()">
+      <div class="mb-3">
+        <label class="form-label">Cliente:</label>
+        <input type="text" class="form-control" formControlName="cliente" />
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Maquinaria:</label>
+            <select class="form-select" formControlName="maquinaria">
+              <option selected>Seleccione la máquinaria</option>
+              <option
+                [value]="maquinaria.tarifa"
+                [text]="maquinaria.tipo"
+                *ngFor="let maquinaria of maquinarias"
+              ></option>
+            </select>
+          </div>
+          <div class="col mt-lg-0 mt-3">
+            <table class="table">
+              <thead>
+                <tr class="table-primary text-center align-middle">
+                  <th *ngFor="let titulo of headerTable" scope="col">
+                    {{ titulo }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="text-tbody">
+                <tr *ngFor="let maquinaria of maquinarias">
+                  <th>{{ maquinaria.codigo }}</th>
+                  <th>{{ maquinaria.tipo }}</th>
+                  <th>{{ maquinaria.tarifa }}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Fecha entrega:</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="fechaEntrega"
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Fecha devolución:</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="fechaDevolucion"
+        />
+      </div>
+      <div class="d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="registrarAlquiler()"
+        >
+          Alquilar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

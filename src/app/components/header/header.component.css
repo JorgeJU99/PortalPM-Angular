@@ -1,0 +1,30 @@
+ul,
+li,
+a {
+  color: white;
+  border: black;
+  border-radius: 5px;
+}
+
+.nav-text {
+  font-size: x-large;
+  font-weight: bold;
+  transition: width 1s;
+  border: white;
+  border-radius: 15px;
+  transition: font-size 1s;
+}
+
+.nav-text:hover {
+  font-size: xx-large;
+  color: white;
+}
+
+.w-img {
+  width: 160px;
+  transition: width 1s;
+}
+
+.w-img:hover {
+  width: 250px;
+}

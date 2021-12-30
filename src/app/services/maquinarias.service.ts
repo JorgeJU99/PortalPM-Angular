@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MaquinariasService {
+  headerTable = ['Código', 'Manquinaria', 'Tarifa'];
   maquinarias = [
     {
       codigo: 'C01',
@@ -23,6 +24,10 @@ export class MaquinariasService {
   ];
 
   constructor() {}
+
+  getHeaderTable() {
+    return this.headerTable;
+  }
 
   getMaquinarias() {
     return this.maquinarias;
