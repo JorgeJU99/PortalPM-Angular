@@ -25,10 +25,18 @@ export class MaquinariasService {
 
   constructor() {}
 
+  /**
+   * Función que permite obtener los datos de un array
+   * @returns retorna el array headerTable
+   */
   getHeaderTable() {
     return this.headerTable;
   }
 
+  /**
+   * Función que permite obtener los datos de un array
+   * @returns retorna el array maquinarias
+   */
   getMaquinarias() {
     return this.maquinarias;
   }

@@ -9,7 +9,20 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-tbody"></tbody>
+        <tbody class="text-tbody">
+          <tr *ngFor="let alquiler of alquilerMaquinaria">
+            <th>{{ alquiler.cliente }}</th>
+            <th>{{ alquiler.maquinaria }}</th>
+            <th>{{ alquiler.fechaEntrega }}</th>
+            <th>{{ alquiler.fechaDevolucion }}</th>
+            <th>{{ alquiler.tarifa }}$</th>
+            <th>{{ alquiler.dias }} días</th>
+            <th>{{ alquiler.importe }}$</th>
+            <th>{{ alquiler.descuento }}$</th>
+            <th>{{ alquiler.garantia }}$</th>
+            <th>{{ alquiler.totalPagar }}$</th>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

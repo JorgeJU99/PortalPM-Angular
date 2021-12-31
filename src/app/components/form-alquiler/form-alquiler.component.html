@@ -10,9 +10,9 @@
           <div class="col">
             <label class="form-label">Maquinaria:</label>
             <select class="form-select" formControlName="maquinaria">
-              <option selected>Seleccione la máquinaria</option>
+              <option [value]="null" disabled>Seleccione la máquinaria</option>
               <option
-                [value]="maquinaria.tarifa"
+                [value]="maquinaria.codigo"
                 [text]="maquinaria.tipo"
                 *ngFor="let maquinaria of maquinarias"
               ></option>
