@@ -164,12 +164,13 @@ export class FormAlquilerComponent implements OnInit {
    * @returns retorna el calculo del descuento entre los dias y el importe
    */
   calcularDescuento(dias: number, importe: number) {
+    let descuento = 0;
     if (dias > 7) {
-      let descuento = importe * 0.1;
-      return descuento;
+      descuento = importe * 0.1;
     } else {
-      return 0;
+      descuento = 0;
     }
+    return descuento;
   }
 
   /**
@@ -190,7 +191,6 @@ export class FormAlquilerComponent implements OnInit {
    * @returns retorna el cálcula de la garantia
    */
   calcularGarantia(importeTotal: number) {
-    let garantia = importeTotal * 0.1;
-    return garantia;
+    return importeTotal * 0.1;
   }
 }
