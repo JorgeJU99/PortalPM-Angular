@@ -5,6 +5,7 @@ import {
   FormBuilder,
   AbstractControl,
 } from '@angular/forms';
+import { Alquiler } from 'src/app/entities/Alquiler';
 import { AlquilerService } from 'src/app/services/alquiler.service';
 import { MaquinariasService } from '../../services/maquinarias.service';
 
@@ -79,13 +80,50 @@ export class FormAlquilerComponent implements OnInit {
     let maquinaria = this.formAlquiler.value.maquinaria;
     let fechaEntrega = this.formAlquiler.value.fechaEntrega;
     let fechaDevolucion = this.formAlquiler.value.fechaDevolucion;
-    let tarifa = 0;
+    let tarifa = this.calcularTarifa(maquinaria);
     let dias = this.calcularDiasFecha(fechaEntrega, fechaDevolucion);
-    let importe = 0;
-    let descuento = 0;
-    let garantia = 0;
-    let totalPagar = 0;
-    this.alquilerService.postAlquiler(this.formAlquiler.value);
+    let importe = this.calcularImporte(dias, tarifa);
+    let descuento = this.calcularDescuento(dias, importe);
+    let totalPagar = this.calcularImporteTotal(importe, descuento);
+    let garantia = this.calcularGarantia(totalPagar);
+    let objAlquiler = new Alquiler(
+      cliente,
+      maquinaria,
+      fechaEntrega,
+      fechaDevolucion,
+      tarifa,
+      dias,
+      importe,
+      descuento,
+      garantia,
+      totalPagar
+    );
+    if (dias > 0) {
+      this.alquilerService.postAlquiler(objAlquiler);
+    } else {
+      alert(
+        'La fecha de devolución del alquiler debe ser mayor a la fecha de entrega'
+      );
+    }
+  }
+
+  /**
+   * Función para calcular la tarifa de la maquinaria según el código
+   * @param maquinaria
+   * @returns retorna el valor de la tarifa
+   */
+  calcularTarifa(maquinaria: string) {
+    let tarifa = 0;
+    if (maquinaria == 'C01') {
+      tarifa = 100;
+    }
+    if (maquinaria == 'C02') {
+      tarifa = 50;
+    }
+    if (maquinaria == 'C03') {
+      tarifa = 150;
+    }
+    return tarifa;
   }
 
   /**
