@@ -201,7 +201,7 @@ export class FormAlquilerComponent implements OnInit {
   }
 
   /**
-   * Método getter que permite obtener el formControlName
+   * Métodos getter que permite obtener el formControlName
    * de las inputs del formulario reactivo
    * @returns retorna las directivas de control del formControlName.
    */
