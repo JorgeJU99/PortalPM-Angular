@@ -13,7 +13,7 @@ export class TableAlquilerComponent implements OnInit {
   constructor(private alquilerService: AlquilerService) {}
 
   /**
-   * Función que carga los métodos al inicializar el componente
+   * Método que carga los métodos al inicializar el componente
    */
   ngOnInit(): void {
     this.getHeaderTable();
@@ -21,7 +21,7 @@ export class TableAlquilerComponent implements OnInit {
   }
 
   /**
-   * Función que permite obtener los encabezados de la tabla
+   * Método que permite obtener los encabezados de la tabla
    * los encabezados son obtenidos del método de getHeaderTable
    * que se encuentran en el servicio alquilerService
    */
@@ -36,7 +36,7 @@ export class TableAlquilerComponent implements OnInit {
   }
 
   /**
-   * Función que permite obtener los datos del alquiler de maquinarias
+   * Método que permite obtener los datos del alquiler de maquinarias
    * los datos son obtenidos del método de getAlquiler
    * que se encuentran en el servicio alquilerService
    */

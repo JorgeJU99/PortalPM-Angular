@@ -18,6 +18,8 @@ export class FormAlquilerComponent implements OnInit {
   formAlquiler: FormGroup;
   maquinarias = [{ codigo: '', tipo: '', tarifa: 0 }];
   headerTable: string[] = [];
+  mensajeAdvertencia = '';
+  controlMensaje = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +30,7 @@ export class FormAlquilerComponent implements OnInit {
   }
 
   /**
-   * Función que carga los métodos al inicializar el componente
+   * Método que carga los métodos al inicializar el componente
    */
   ngOnInit(): void {
     this.getHeaderTable();
@@ -41,7 +43,7 @@ export class FormAlquilerComponent implements OnInit {
    */
   createForm() {
     return (this.formAlquiler = this.formBuilder.group({
-      cliente: ['', [Validators.required]],
+      cliente: ['', [Validators.required, Validators.minLength(5)]],
       maquinaria: ['', [Validators.required]],
       fechaEntrega: ['', [Validators.required]],
       fechaDevolucion: ['', [Validators.required]],
@@ -49,7 +51,7 @@ export class FormAlquilerComponent implements OnInit {
   }
 
   /**
-   * Función que permite obtener los encabezados de la tabla
+   * Método que permite obtener los encabezados de la tabla
    * los encabezados son obtenidos del método de getHeaderTable
    * que se encuentran en el servicio maquinariaService
    */
@@ -64,7 +66,7 @@ export class FormAlquilerComponent implements OnInit {
   }
 
   /**
-   * Función que permite obtener los datos de las maquinarias
+   * Método que permite obtener los datos de las maquinarias
    * los datos son obtenidos del método de getMaquinarias
    * que se encuentran en el servicio maquinariaService
    */
@@ -73,7 +75,7 @@ export class FormAlquilerComponent implements OnInit {
   }
 
   /**
-   * Función para registrar el alquiler de la maquinaria
+   * Método para registrar el alquiler de la maquinaria
    */
   registrarAlquiler() {
     let cliente = this.formAlquiler.value.cliente;
@@ -98,12 +100,13 @@ export class FormAlquilerComponent implements OnInit {
       garantia,
       totalPagar
     );
-    if (dias > 0) {
+    if (this.formAlquiler.invalid) {
+      this.setErrorControl(Object.values(this.formAlquiler.controls));
+    }
+    if (this.formAlquiler.valid && dias > 0) {
       this.alquilerService.postAlquiler(objAlquiler);
-    } else {
-      alert(
-        'La fecha de devolución del alquiler debe ser mayor a la fecha de entrega'
-      );
+      this.controlMensaje = false;
+      this.formAlquiler.reset();
     }
   }
 
@@ -139,8 +142,11 @@ export class FormAlquilerComponent implements OnInit {
     if (fechaFinal > fechaInicial) {
       let diferenciaFechas = fechaFinal.getTime() - fechaInicial.getTime();
       dias = Math.round(diferenciaFechas / (1000 * 60 * 60 * 24));
-    } else if (fechaFinal != null && fechaFinal < fechaInicial) {
+    } else if (fechaFinal <= fechaInicial) {
       dias = 0;
+      this.controlMensaje = true;
+      this.mensajeAdvertencia =
+        'La fecha de devolución del alquiler debe ser mayor a la fecha de entrega.';
     }
     return dias;
   }
@@ -192,5 +198,38 @@ export class FormAlquilerComponent implements OnInit {
    */
   calcularGarantia(importeTotal: number) {
     return importeTotal * 0.1;
+  }
+
+  /**
+   * Método getter que permite obtener el formControlName
+   * de las inputs del formulario reactivo
+   * @returns retorna las directivas de control del formControlName.
+   */
+  get cliente() {
+    return this.formAlquiler.get('cliente');
+  }
+
+  get maquinaria() {
+    return this.formAlquiler.get('maquinaria');
+  }
+
+  get fechaEntrega() {
+    return this.formAlquiler.get('fechaEntrega');
+  }
+
+  get fechaDevolucion() {
+    return this.formAlquiler.get('fechaDevolucion');
+  }
+
+  /**
+   * Método que permite enviar el control de error de las validaciones
+   * @param controls
+   */
+  setErrorControl(controls: AbstractControl[]) {
+    for (const control of controls) {
+      if (control instanceof FormGroup) {
+        this.setErrorControl(Object.values(control.controls));
+      } else control.markAsTouched();
+    }
   }
 }
